@@ -19,6 +19,7 @@ const button = createButton('remove-item btn-link text-red');
 li.appendChild(button);
 itemList.appendChild(li);
 itemInput.value = '';
+clearUI();
 }
 
 function createButton(classes){
@@ -41,6 +42,7 @@ function itemRemove(e){
     if(e.target.parentElement.classList.contains('remove-item')){
         e.target.parentElement.parentElement.remove();
     }
+    clearUI();
 }
 
 // clear items
@@ -48,9 +50,25 @@ function clearItems(e){
     while(itemList.firstChild){
         itemList.removeChild(itemList.firstChild);
     }
+    clearUI();
+}
+
+// clear UI
+function clearUI(){
+    const items = itemList.querySelectorAll('li');
+    if(items.length){
+        document.querySelector('#clear').style.display = 'block';
+        document.querySelector('#filter').style.display = 'block';
+    }
+    else{
+        document.querySelector('#clear').style.display = 'none';
+        document.querySelector('#filter').style.display = 'none';
+    }
 }
 
 // Item Listeners
 itemForm.addEventListener('submit', addItem);
 itemList.addEventListener('click',itemRemove);
 clearBtn.addEventListener('click',clearItems);
+
+clearUI();
