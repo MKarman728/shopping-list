@@ -2,6 +2,7 @@ const itemForm = document.querySelector('#item-form');
 const itemInput = document.querySelector('#item-input');
 const itemList = document.querySelector('#item-list');
 const clearBtn = document.querySelector('#clear');
+const filter = document.querySelector('#filter');
 
 const addItem = (e)=>{
     e.preventDefault(e);
@@ -53,6 +54,21 @@ function clearItems(e){
     clearUI();
 }
 
+// filter items
+function filterItems(e){
+    const items = itemList.querySelectorAll('li');
+    items.forEach(item => {
+        const itemName = item.firstChild.textContent.toLowerCase().trim();
+        if(itemName.indexOf(e.target.value.toLowerCase()) !== -1){
+            item.style.display = 'flex';
+        }
+        else{
+            item.style.display = 'none';
+        }
+    })
+    clearUI();
+}
+
 // clear UI
 function clearUI(){
     const items = itemList.querySelectorAll('li');
@@ -70,5 +86,6 @@ function clearUI(){
 itemForm.addEventListener('submit', addItem);
 itemList.addEventListener('click',itemRemove);
 clearBtn.addEventListener('click',clearItems);
+filter.addEventListener('input', filterItems);
 
 clearUI();
